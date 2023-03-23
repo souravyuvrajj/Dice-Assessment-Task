@@ -17,5 +17,4 @@ public class DiceApplication {
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate;
 	}
-
 }

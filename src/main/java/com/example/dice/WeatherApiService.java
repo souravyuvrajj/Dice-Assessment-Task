@@ -14,11 +14,8 @@ public class WeatherApiService {
     @Value("${rapidapi.BASE_URL}")
     private String BASE_URL;
 
-    @Value("${rapidapi.API_KEY}")
-    private static String API_KEY;
-
     @Value("${rapidapi.RAPID_API_HOST}")
-    private static String RAPID_API_HOST;
+    private String RAPID_API_HOST;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -43,12 +40,14 @@ public class WeatherApiService {
         return responseEntity.getBody();
     }
 
-    private static HttpHeaders getHttpHeaders() {
+    private HttpHeaders getHttpHeaders() {
+        String apiKey = ApiKeyContextHolder.getApiKey();
+        String applicationId = ApiKeyContextHolder.getApplicationID();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.set("X-Application-ID", "weatherApp");
+        headers.set("X-Application-ID", applicationId);
         headers.set("x-rapidapi-host", RAPID_API_HOST);
-        headers.set("x-rapidapi-key", API_KEY);
+        headers.set("x-rapidapi-key", apiKey);
         return headers;
     }
 }
